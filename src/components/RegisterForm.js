@@ -1,30 +1,97 @@
+import React, { useContext, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
+  createUserWithEmailAndPassword,
   GoogleAuthProvider,
-  signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
-import React, { useContext } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/UserContext";
 
-const LoginForm = () => {
-  const navigate = useNavigate();
+const RegisterForm = () => {
   const { auth } = useContext(AuthContext);
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
   const googleProvider = new GoogleAuthProvider();
-  const passLogIn = (event) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || "/";
+  const [email, setEmail] = useState("");
+  const [url, setUrl] = useState("");
+  const [err, setErr] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const nameValidation = (e) => {
+    if (e.target.value === "") {
+      setErr("Please tell us your name");
+      return;
+    }
+    if (!/.{4,}/.test(e.target.value)) {
+      setErr("Please tell us your full name");
+      return;
+    }
+    setErr("");
+    setName(e.target.value);
+  };
+  const urlValidation = (e) => {
+    if (e.targer.value === "") {
+      return;
+    }
+    if (
+      !/^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/.test(
+        e.target.value
+      )
+    ) {
+      setErr("URL must be starts with HTTP or HTTPS");
+      return;
+    }
+    setUrl(e.target.value);
+  };
+  const mailValidation = (e) => {
+    const mail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.target.value);
+    if (mail) {
+      setErr("");
+      setEmail(e.target.value);
+    } else {
+      setErr("Invalid Email Address!!");
+    }
+  };
+  const passValidation = (e) => {
+    if (!/.{6,}/.test(e.target.value)) {
+      setErr("password should be at least 6 charecter!!");
+      return;
+    }
+    if (!/(?=.*?[0-9])/.test(e.target.value)) {
+      setErr("password should be at least 1 digit!!");
+      return;
+    }
+    if (!/(?=.*?[#?!@$%^&*-])/.test(e.target.value)) {
+      setErr("password should be at least 1 special cherecter!!");
+      return;
+    }
+    setErr("");
+    setPassword(e.target.value);
+  };
+
+  const signUpWithEmailPass = (event) => {
     event.preventDefault();
-    const email = event.target.email.value;
-    const password = event.target.password.value;
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        navigate(from, { replace: true });
-      })
-      .catch((error) => {
-        const errorMessage = error.message;
-      });
+    if (name && email && password) {
+      setErr("");
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          navigate(from, { replace: true });
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          if (errorMessage === "Firebase: Error (auth/email-already-in-use).") {
+            setErr("The Email is already registered");
+            return;
+          }
+          setErr(errorMessage);
+        });
+    } else {
+      setErr("Please fill the informtion bellow");
+    }
   };
   const signUpWithGmail = () => {
     signInWithPopup(auth, googleProvider)
@@ -43,19 +110,40 @@ const LoginForm = () => {
         // ...
       });
   };
+
   return (
     <div>
+      <h1 className="text-red-500">{err}</h1>
       <div className="w-full p-8 space-y-3 rounded-xl bg-white shadow-2xl text-gray-800">
-        <h1 className="text-2xl font-bold text-center">Log In</h1>
+        <h1 className="text-2xl font-bold text-center">Register</h1>
         <form
-          onSubmit={passLogIn}
           noValidate=""
           action=""
           className="space-y-6 ng-untouched ng-pristine ng-valid"
         >
           <div className="space-y-1 text-sm">
             <input
-              required
+              onBlur={nameValidation}
+              type="text"
+              name="name"
+              id="name"
+              placeholder="Full Name"
+              className="w-full px-4 py-3 rounded-md border-gray-300 bg-gray-200 text-gray-800 focus:border-purple-600"
+            />
+          </div>
+          <div className="space-y-1 text-sm">
+            <input
+              onBlur={urlValidation}
+              type="text"
+              name="photoURL"
+              id="photoURL"
+              placeholder="link of your picture "
+              className="w-full px-4 py-3 rounded-md border-gray-300 bg-gray-200 text-gray-800 focus:border-purple-600"
+            />
+          </div>
+          <div className="space-y-1 text-sm">
+            <input
+              onBlur={mailValidation}
               type="email"
               name="email"
               id="email"
@@ -65,24 +153,19 @@ const LoginForm = () => {
           </div>
           <div className="space-y-1 text-sm">
             <input
-              required
+              onChange={passValidation}
               type="password"
               name="password"
               id="password"
               placeholder="Password"
               className="w-full px-4 py-3 rounded-md border-gray-300 bg-gray-200 text-gray-800 focus:border-purple-600"
             />
-            <div className="flex justify-end text-xs text-purple-600">
-              <Link rel="noopener noreferrer" to="#">
-                Forgot Password?
-              </Link>
-            </div>
           </div>
           <button
-            type="submit"
+            onClick={signUpWithEmailPass}
             className="block w-full p-3 text-center rounded-md text-gray-50 bg-purple-600 hover:bg-purple-800"
           >
-            Log in
+            Register
           </button>
         </form>
         <div className="flex items-center pt-4 space-x-1">
@@ -126,9 +209,9 @@ const LoginForm = () => {
           </button>
         </div>
         <p className="text-xs text-center sm:px-6 text-gray-600">
-          Don't have an account?
-          <Link to="/register" className="underline text-purple-600">
-            Register
+          Already have an account?
+          <Link to="/log-in" className="underline text-purple-600">
+            Log in
           </Link>
         </p>
       </div>
@@ -136,4 +219,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default RegisterForm;
