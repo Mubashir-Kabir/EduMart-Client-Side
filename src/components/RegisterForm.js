@@ -5,6 +5,7 @@ import {
   GoogleAuthProvider,
   GithubAuthProvider,
   signInWithPopup,
+  updateProfile,
 } from "firebase/auth";
 import { AuthContext } from "../contexts/UserContext";
 import { FcGoogle } from "react-icons/fc";
@@ -36,7 +37,7 @@ const RegisterForm = () => {
     setName(e.target.value);
   };
   const urlValidation = (e) => {
-    if (e.targer.value === "") {
+    if (e.target.value === "") {
       return;
     }
     if (
@@ -82,6 +83,18 @@ const RegisterForm = () => {
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
+          updateProfile(auth.currentUser, {
+            displayName: name,
+            photoURL: url,
+          })
+            .then(() => {
+              // Profile updated!
+              // ...
+            })
+            .catch((error) => {
+              // An error occurred
+              // ...
+            });
           navigate(from, { replace: true });
         })
         .catch((error) => {
@@ -91,7 +104,7 @@ const RegisterForm = () => {
             setErr("The Email is already registered");
             return;
           }
-          setErr(errorMessage);
+          setErr(errorMessage.slice(22, -2));
         });
     } else {
       setErr("Please fill the informtion bellow");
@@ -134,8 +147,9 @@ const RegisterForm = () => {
 
   return (
     <div>
-      <h1 className="text-red-500">{err}</h1>
       <div className="w-full p-8 space-y-3 rounded-xl bg-white shadow-2xl text-gray-800">
+        <h1 className="text-red-500">{err}</h1>
+
         <h1 className="text-2xl font-bold text-center">Register</h1>
         <form
           noValidate=""
@@ -144,6 +158,7 @@ const RegisterForm = () => {
         >
           <div className="space-y-1 text-sm">
             <input
+              required
               onBlur={nameValidation}
               type="text"
               name="name"
@@ -155,7 +170,7 @@ const RegisterForm = () => {
           <div className="space-y-1 text-sm">
             <input
               onBlur={urlValidation}
-              type="text"
+              type="url"
               name="photoURL"
               id="photoURL"
               placeholder="link of your picture "
@@ -164,6 +179,7 @@ const RegisterForm = () => {
           </div>
           <div className="space-y-1 text-sm">
             <input
+              required
               onBlur={mailValidation}
               type="email"
               name="email"
@@ -174,6 +190,7 @@ const RegisterForm = () => {
           </div>
           <div className="space-y-1 text-sm">
             <input
+              required
               onChange={passValidation}
               type="password"
               name="password"
@@ -215,7 +232,10 @@ const RegisterForm = () => {
         </div>
         <p className="text-xs text-center sm:px-6 text-gray-600">
           Already have an account?
-          <Link to="/log-in" className="underline text-purple-600">
+          <Link
+            to="/log-in"
+            className="text-purple-600 hover:underline hover:text-purple-400 ml-2"
+          >
             Log in
           </Link>
         </p>

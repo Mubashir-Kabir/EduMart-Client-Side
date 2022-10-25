@@ -4,13 +4,14 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/UserContext";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 
 const LoginForm = () => {
+  const [error, SetError] = useState("");
   const navigate = useNavigate();
   const { auth } = useContext(AuthContext);
   const location = useLocation();
@@ -28,6 +29,15 @@ const LoginForm = () => {
       })
       .catch((error) => {
         const errorMessage = error.message;
+        if (errorMessage === "Firebase: Error (auth/user-not-found).") {
+          SetError("User not found along with this email. Please register");
+          return;
+        }
+        if (errorMessage === "Firebase: Error (auth/wrong-password).") {
+          SetError("Wrong Password");
+          return;
+        }
+        SetError(errorMessage.slice(22, -2));
       });
   };
   const signUpWithGmail = () => {
@@ -67,6 +77,8 @@ const LoginForm = () => {
   return (
     <div>
       <div className="w-full p-8 space-y-3 rounded-xl bg-white shadow-2xl text-gray-800">
+        <p className="text-red-500">{error}</p>
+
         <h1 className="text-2xl font-bold text-center">Log In</h1>
         <form
           onSubmit={passLogIn}
@@ -93,7 +105,7 @@ const LoginForm = () => {
               placeholder="Password"
               className="w-full px-4 py-3 rounded-md border-gray-300 bg-gray-200 text-gray-800 focus:border-purple-600"
             />
-            <div className="flex justify-end text-xs text-purple-600">
+            <div className="flex justify-end text-xs text-purple-600 hover:underline hover:text-purple-400">
               <Link rel="noopener noreferrer" to="#">
                 Forgot Password?
               </Link>
@@ -132,7 +144,10 @@ const LoginForm = () => {
         </div>
         <p className="text-xs text-center sm:px-6 text-gray-600">
           Don't have an account?
-          <Link to="/register" className="underline text-purple-600">
+          <Link
+            to="/register"
+            className=" text-purple-600 hover:underline hover:text-purple-400 ml-2"
+          >
             Register
           </Link>
         </p>
