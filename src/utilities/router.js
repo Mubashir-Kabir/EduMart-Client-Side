@@ -26,7 +26,7 @@ const router = createBrowserRouter([
       },
       {
         path: "courses",
-        loader: () => fetch("https://api.itbook.store/1.0/new"),
+        loader: () => fetch("https://edumart-server-side.vercel.app/courses"),
         element: <Courses></Courses>,
       },
       {
@@ -48,7 +48,7 @@ const router = createBrowserRouter([
       {
         path: "courses/:id",
         loader: ({ params }) =>
-          fetch(`https://api.itbook.store/1.0/books/${params.id}`),
+          fetch(`https://edumart-server-side.vercel.app/courses/${params.id}`),
         element: <CourseDetails></CourseDetails>,
       },
       {
