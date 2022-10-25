@@ -9,6 +9,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import CourseDetails from "../pages/CourseDetails";
 import Checkout from "../pages/Checkout";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -52,10 +53,14 @@ const router = createBrowserRouter([
         element: <CourseDetails></CourseDetails>,
       },
       {
-        path: "check-out/:id",
+        path: "checkout/:id",
         loader: ({ params }) =>
-          fetch(`https://api.itbook.store/1.0/books/${params.id}`),
-        element: <Checkout></Checkout>,
+          fetch(`https://edumart-server-side.vercel.app/courses/${params.id}`),
+        element: (
+          <PrivateRoute>
+            <Checkout></Checkout>
+          </PrivateRoute>
+        ),
       },
     ],
   },

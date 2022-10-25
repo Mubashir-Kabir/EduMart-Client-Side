@@ -1,4 +1,5 @@
 import React from "react";
+import { FcPrint } from "react-icons/fc";
 import { Link, useLoaderData } from "react-router-dom";
 
 const CourseDetails = () => {
@@ -33,7 +34,12 @@ const CourseDetails = () => {
   }
   return (
     <div>
-      <div className="p-5 mx-auto sm:p-10 md:p-16  text-gray-800">
+      <div className="p-5 mx-auto sm:p-10 md:p-16  text-gray-800 relative ">
+        <FcPrint
+          className="absolute top-0 right-0 text-xl lg:top-12 lg:right-24 lg:text-5xl hover:cursor-pointer"
+          title="Print"
+        ></FcPrint>
+
         <div className="flex flex-col max-w-5xl mx-auto overflow-hidden rounded">
           <img
             src={imgURL}
@@ -239,6 +245,12 @@ const CourseDetails = () => {
               <h4 className="text-lg font-semibold">Course Details:</h4>
               <p className="text-sm font-light text-justify">{details}</p>
             </div>
+            <Link
+              to={`../checkout/${id}`}
+              className="inline-flex items-center  justify-center py-4 px-7 font-semibold text-xl tracking-wide text-white transition duration-200 rounded shadow-xl bg-red-500 hover:bg-red-700 focus:shadow-outline focus:outline-none"
+            >
+              Enroll now
+            </Link>
           </div>
         </div>
       </div>
