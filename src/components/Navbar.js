@@ -7,6 +7,7 @@ import { BsSun } from "react-icons/bs";
 import { BsMoonFill } from "react-icons/bs";
 import { FiLogIn } from "react-icons/fi";
 import logo from "../utilities/logo.png";
+import { notifyError, notifySuccess } from "../utilities/sharedFunctions";
 
 export const Navbar = () => {
   const [isDark, setIsDark] = useState(false);
@@ -18,10 +19,10 @@ export const Navbar = () => {
     event.preventDefault();
     signOut(auth)
       .then(() => {
-        //loging out
+        notifySuccess("Log out successful");
       })
       .catch((error) => {
-        // An error happened.
+        notifyError("Something went wrong. Tray again");
       });
   };
 

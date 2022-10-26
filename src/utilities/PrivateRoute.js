@@ -5,6 +5,7 @@ import { AuthContext } from "../contexts/UserContext";
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
   const location = useLocation();
+
   if (loading) {
     return (
       <div className="flex items-center justify-center space-x-2">

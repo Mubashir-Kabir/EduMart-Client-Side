@@ -10,6 +10,7 @@ import {
 import { AuthContext } from "../contexts/UserContext";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
+import { notifyError, notifySuccess } from "../utilities/sharedFunctions";
 
 const RegisterForm = () => {
   const { auth } = useContext(AuthContext);
@@ -81,8 +82,8 @@ const RegisterForm = () => {
     if (name && email && password) {
       setErr("");
       createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          const user = userCredential.user;
+        .then(() => {
+          notifySuccess("Successfully Registered");
           updateProfile(auth.currentUser, {
             displayName: name,
             photoURL: url,
@@ -92,56 +93,45 @@ const RegisterForm = () => {
               // ...
             })
             .catch((error) => {
-              // An error occurred
-              // ...
+              notifyError("profile update failed ");
             });
           navigate(from, { replace: true });
         })
         .catch((error) => {
-          const errorCode = error.code;
           const errorMessage = error.message;
           if (errorMessage === "Firebase: Error (auth/email-already-in-use).") {
             setErr("The Email is already registered");
             return;
           }
-          setErr(errorMessage.slice(22, -2));
+          notifyError(errorMessage.slice(22, -2));
         });
     } else {
-      setErr("Please fill the informtion bellow");
+      setErr("Please fill the information bellow");
     }
   };
   const signUpWithGmail = () => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        const user = result.user;
+        notifySuccess("log-in Successful");
         navigate(from, { replace: true });
       })
       .catch((error) => {
         const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
+        console.log(errorMessage);
+        notifyError("Something went wrong");
       });
   };
   const signUpWithGithub = () => {
     signInWithPopup(auth, githubProvider)
-      .then((result) => {
-        const credential = GithubAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        const user = result.user;
+      .then(() => {
+        notifySuccess("log-in Successful");
+
         navigate(from, { replace: true });
       })
       .catch((error) => {
         const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GithubAuthProvider.credentialFromError(error);
-        // ...
+        console.log(errorMessage);
+        notifyError("Something went wrong");
       });
   };
 

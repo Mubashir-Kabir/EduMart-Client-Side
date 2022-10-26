@@ -10,6 +10,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/UserContext";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
+import { notifyError, notifySuccess } from "../utilities/sharedFunctions";
 
 const LoginForm = () => {
   const [error, SetError] = useState("");
@@ -20,6 +21,7 @@ const LoginForm = () => {
   const from = location.state?.from?.pathname || "/";
   const googleProvider = new GoogleAuthProvider();
   const githubProvider = new GithubAuthProvider();
+
   const emailHandle = (e) => {
     setEmail(e.target.value);
   };
@@ -28,17 +30,17 @@ const LoginForm = () => {
     const password = event.target.password.value;
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        const user = userCredential.user;
+        notifySuccess("Log-in Successful");
         navigate(from, { replace: true });
       })
       .catch((error) => {
         const errorMessage = error.message;
         if (errorMessage === "Firebase: Error (auth/user-not-found).") {
-          SetError("User not found along with this email. Please register");
+          notifyError("User not found along with this email. Please register");
           return;
         }
         if (errorMessage === "Firebase: Error (auth/wrong-password).") {
-          SetError("Wrong Password");
+          notifyError("Wrong Password");
           return;
         }
         SetError(errorMessage.slice(22, -2));
@@ -47,48 +49,30 @@ const LoginForm = () => {
   const signUpWithGmail = () => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        const user = result.user;
+        notifySuccess("Log-in Successful");
         navigate(from, { replace: true });
       })
       .catch((error) => {
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
+        notifyError("Something went wrong!!");
       });
   };
   const signUpWithGithub = () => {
     signInWithPopup(auth, githubProvider)
       .then((result) => {
-        const credential = GithubAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        const user = result.user;
+        notifySuccess("Log-in Successful");
         navigate(from, { replace: true });
       })
       .catch((error) => {
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GithubAuthProvider.credentialFromError(error);
-        // ...
+        notifyError("Something went wrong!!");
       });
   };
   const forgotPass = () => {
     sendPasswordResetEmail(auth, email)
       .then(() => {
-        // Password reset email sent!
-        // ..
-        SetError("password reset mail sent");
+        notifySuccess("Password reset email has been sent");
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        SetError(errorMessage.slice(22, -2));
+        notifyError("Something went wrong!!");
       });
   };
   return (

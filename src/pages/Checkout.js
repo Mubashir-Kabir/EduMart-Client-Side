@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import { MdFavorite } from "react-icons/md";
 import { GrFavorite } from "react-icons/gr";
+import { notifyError } from "../utilities/sharedFunctions";
 
 const CheckOut = () => {
   const course = useLoaderData();
@@ -66,12 +67,12 @@ const CheckOut = () => {
             Back
             <span className="sr-only sm:not-sr-only"> to Courses</span>
           </Link>
-          <Link
-            to="#"
+          <button
+            onClick={() => notifyError("Payment method is under development")}
             className="px-6 py-2 border rounded-md bg-violet-600 transition-colors duration-800 text-gray-50 border-violet-600 hover:bg-violet-900"
           >
             <span className="sr-only sm:not-sr-only">Make</span> Payment
-          </Link>
+          </button>
         </div>
       </div>
     </div>

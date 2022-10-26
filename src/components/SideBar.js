@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { AuthContext } from "../contexts/UserContext";
 import { FiLogIn, FiBox } from "react-icons/fi";
+import { notifyError, notifySuccess } from "../utilities/sharedFunctions";
 
 const SideBar = ({ courses }) => {
   const { user, auth } = useContext(AuthContext);
@@ -12,10 +13,10 @@ const SideBar = ({ courses }) => {
     event.preventDefault();
     signOut(auth)
       .then(() => {
-        //loging out
+        notifySuccess("Log out successful");
       })
       .catch((error) => {
-        // An error happened.
+        notifyError("Something went wrong. Try again");
       });
   };
 
