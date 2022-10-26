@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { AiTwotoneStar } from "react-icons/ai";
 
 const CourseCard = ({ course }) => {
   const { thumbnail, name, details, price, ratings, id } = course;
@@ -17,7 +18,7 @@ const CourseCard = ({ course }) => {
         />
         <div className="absolute inset-0 bg-gray-800 bg-opacity-25" />
       </div>
-      <div className="px-2 py-4 border border-t-0 rounded-b ">
+      <div className="px-2 py-4  ">
         <h5 className="mb-2 text-xl font-bold leading-none sm:text-2xl">
           {name}
         </h5>
@@ -26,10 +27,16 @@ const CourseCard = ({ course }) => {
         </p>
         <p className="flex justify-around mb-5">
           <span>
-            <span className="font-semibold">price: </span>$ {price}
+            <span className="font-semibold">price: </span>
+            <span className="font-semibold text-xl">$</span>
+            <span className="text-red-500 font-semibold text-lg">{price}</span>
           </span>
-          <span>
-            <span className="font-semibold">rating: </span>* {ratings}
+          <span className="flex items-center space-x-1">
+            <span className="font-semibold flex items-center">rating: </span>
+            <span className="flex items-center space-x-1">
+              <AiTwotoneStar className="text-yellow-500"></AiTwotoneStar>{" "}
+              {ratings}
+            </span>
           </span>
         </p>
         <Link

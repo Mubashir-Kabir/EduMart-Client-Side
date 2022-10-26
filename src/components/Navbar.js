@@ -5,6 +5,7 @@ import { AuthContext } from "../contexts/UserContext";
 import defaultUser from "../utilities/user.png";
 import { BsSun } from "react-icons/bs";
 import { BsMoonFill } from "react-icons/bs";
+import { FiLogIn } from "react-icons/fi";
 import logo from "../utilities/logo.png";
 
 export const Navbar = () => {
@@ -119,7 +120,10 @@ export const Navbar = () => {
                     title="Sign in"
                     className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-purple-600"
                   >
-                    Log in
+                    <div className="flex items-center">
+                      Log in
+                      <FiLogIn className="mt-1"></FiLogIn>
+                    </div>
                   </Link>
                 </li>
                 <li>

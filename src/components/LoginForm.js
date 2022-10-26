@@ -3,6 +3,7 @@ import {
   GithubAuthProvider,
   signInWithEmailAndPassword,
   signInWithPopup,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import React, { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -12,15 +13,18 @@ import { FaGithub } from "react-icons/fa";
 
 const LoginForm = () => {
   const [error, SetError] = useState("");
+  const [email, setEmail] = useState("");
   const navigate = useNavigate();
   const { auth } = useContext(AuthContext);
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
   const googleProvider = new GoogleAuthProvider();
   const githubProvider = new GithubAuthProvider();
+  const emailHandle = (e) => {
+    setEmail(e.target.value);
+  };
   const passLogIn = (event) => {
     event.preventDefault();
-    const email = event.target.email.value;
     const password = event.target.password.value;
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -74,6 +78,19 @@ const LoginForm = () => {
         // ...
       });
   };
+  const forgotPass = () => {
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        // Password reset email sent!
+        // ..
+        SetError("password reset mail sent");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        SetError(errorMessage.slice(22, -2));
+      });
+  };
   return (
     <div>
       <div className="w-full p-8 space-y-3 rounded-xl bg-white shadow-2xl text-gray-800">
@@ -88,6 +105,7 @@ const LoginForm = () => {
         >
           <div className="space-y-1 text-sm">
             <input
+              onChange={emailHandle}
               required
               type="email"
               name="email"
@@ -106,9 +124,9 @@ const LoginForm = () => {
               className="w-full px-4 py-3 rounded-md border-gray-300 bg-gray-200 text-gray-800 focus:border-purple-600"
             />
             <div className="flex justify-end text-xs text-purple-600 hover:underline hover:text-purple-400">
-              <Link rel="noopener noreferrer" to="#">
+              <span className="hover:cursor-pointer" onClick={forgotPass}>
                 Forgot Password?
-              </Link>
+              </span>
             </div>
           </div>
           <button
