@@ -1,10 +1,12 @@
 import React from "react";
 import { FcPrint } from "react-icons/fc";
 import { Link, useLoaderData } from "react-router-dom";
+import Pdf from "react-to-pdf";
 
 const CourseDetails = () => {
   const course = useLoaderData();
-  console.log(course);
+  const ref = React.createRef();
+
   const {
     name,
     id,
@@ -35,10 +37,19 @@ const CourseDetails = () => {
   return (
     <div>
       <div className="p-5 mx-auto sm:p-10 md:p-16  text-gray-800 relative ">
-        <FcPrint
+        <Pdf targetRef={ref} filename={`${name}.pdf`}>
+          {({ toPdf }) => (
+            <FcPrint
+              onClick={toPdf}
+              className="absolute top-0 right-0 text-xl lg:top-12 lg:right-24 lg:text-5xl hover:cursor-pointer"
+              title="Print"
+            ></FcPrint>
+          )}
+        </Pdf>
+        {/* <FcPrint
           className="absolute top-0 right-0 text-xl lg:top-12 lg:right-24 lg:text-5xl hover:cursor-pointer"
           title="Print"
-        ></FcPrint>
+        ></FcPrint> */}
 
         <div className="flex flex-col max-w-5xl mx-auto overflow-hidden rounded">
           <img
@@ -46,7 +57,10 @@ const CourseDetails = () => {
             alt=""
             className="w-full h-60 sm:h-96 bg-gray-500"
           />
-          <div className="p-6 pb-12 m-4 mx-auto -mt-20 space-y-6 lg:max-w-5xl sm:px-10 sm:mx-12 lg:rounded-md bg-gray-100">
+          <div
+            ref={ref}
+            className="p-6 pb-12 m-4 mx-auto -mt-20 space-y-6 lg:max-w-5xl sm:px-10 sm:mx-12 lg:rounded-md bg-gray-100"
+          >
             <div className="space-y-2">
               <h3 className="inline-block text-3xl font-semibold sm:text-3xl">
                 {name}
