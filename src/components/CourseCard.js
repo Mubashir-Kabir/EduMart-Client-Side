@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const CourseCard = ({ course }) => {
-  console.log(course);
   const { thumbnail, name, details, price, ratings, id } = course;
   let shortDetails;
   if (details.length > 100) {
@@ -35,7 +34,7 @@ const CourseCard = ({ course }) => {
         </p>
         <Link
           to={`../course/${id}`}
-          className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-purple-500 hover:bg-purple-700 focus:shadow-outline focus:outline-none"
+          className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-purple-600 hover:bg-purple-800 focus:shadow-outline focus:outline-none"
         >
           Course Details
         </Link>

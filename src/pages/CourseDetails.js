@@ -9,6 +9,7 @@ const CourseDetails = () => {
 
   const {
     name,
+    price,
     id,
     imgURL,
     offeredBy,
@@ -46,10 +47,6 @@ const CourseDetails = () => {
             ></FcPrint>
           )}
         </Pdf>
-        {/* <FcPrint
-          className="absolute top-0 right-0 text-xl lg:top-12 lg:right-24 lg:text-5xl hover:cursor-pointer"
-          title="Print"
-        ></FcPrint> */}
 
         <div className="flex flex-col max-w-5xl mx-auto overflow-hidden rounded">
           <img
@@ -223,6 +220,12 @@ const CourseDetails = () => {
                   </div>
                   <p className="text-sm text-gray-600">
                     {enrolled} already enrolled
+                  </p>
+                  <p className="mt-2">
+                    <span className="mr-1 font-semibold">Price:</span>
+                    <span className="font-semibold px-4 py-1  tracking-wide text-white transition duration-200 rounded shadow-md bg-red-500">
+                      ${price}
+                    </span>{" "}
                   </p>
                 </div>
                 <div>
