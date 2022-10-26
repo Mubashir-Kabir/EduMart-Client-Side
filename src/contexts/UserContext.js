@@ -16,7 +16,7 @@ const UserContext = ({ children }) => {
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [auth]);
   return (
     <div>
       <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

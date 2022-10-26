@@ -34,7 +34,7 @@ const CourseCard = ({ course }) => {
           </span>
         </p>
         <Link
-          to={`../courses/${id}`}
+          to={`../course/${id}`}
           className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-purple-500 hover:bg-purple-700 focus:shadow-outline focus:outline-none"
         >
           Course Details

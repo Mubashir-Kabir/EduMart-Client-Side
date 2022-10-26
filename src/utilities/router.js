@@ -47,7 +47,7 @@ const router = createBrowserRouter([
         element: <Register></Register>,
       },
       {
-        path: "courses/:id",
+        path: "course/:id",
         loader: ({ params }) =>
           fetch(`https://edumart-server-side.vercel.app/courses/${params.id}`),
         element: <CourseDetails></CourseDetails>,

@@ -226,7 +226,10 @@ const CourseDetails = () => {
                 <div className="flex flex-wrap py-6 space-x-2 border-t border-dashed border-gray-600">
                   <h4 className="text-lg font-semibold">Skill You gain:</h4>
                   {skillsYouGain.map((skill) => (
-                    <p className="px-3 mb-1 py-1 rounded-sm hover:underline bg-violet-600 text-gray-50">
+                    <p
+                      key={Math.random() * 10000}
+                      className="px-3 mb-1 py-1 rounded-sm hover:underline bg-violet-600 text-gray-50"
+                    >
                       {skill}
                     </p>
                   ))}
@@ -235,7 +238,12 @@ const CourseDetails = () => {
                   <h4 className="text-lg font-semibold">What you learn:</h4>
                   <ul className="ml-4 space-y-1 list-disc">
                     {whatYouLearn.map((learning) => (
-                      <li className="hover:underline">{learning}</li>
+                      <li
+                        key={Math.random() * 10000}
+                        className="hover:underline"
+                      >
+                        {learning}
+                      </li>
                     ))}
                   </ul>
                 </div>
