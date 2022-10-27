@@ -13,18 +13,28 @@ import { FaGithub } from "react-icons/fa";
 import { notifyError, notifySuccess } from "../utilities/sharedFunctions";
 
 const LoginForm = () => {
-  const [error, SetError] = useState("");
-  const [email, setEmail] = useState("");
   const navigate = useNavigate();
   const { auth } = useContext(AuthContext);
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
+
+  //Auth providers
   const googleProvider = new GoogleAuthProvider();
   const githubProvider = new GithubAuthProvider();
 
+  //state for error
+  const [error, SetError] = useState("");
+  //state for email
+  const [email, setEmail] = useState("");
+
+  //getting location for redirect user where came from
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
+  // setting email
   const emailHandle = (e) => {
     setEmail(e.target.value);
   };
+
+  //log in with email and password handle
   const passLogIn = (event) => {
     event.preventDefault();
     const password = event.target.password.value;
@@ -46,6 +56,8 @@ const LoginForm = () => {
         SetError(errorMessage.slice(22, -2));
       });
   };
+
+  //log in with gmail handle
   const signUpWithGmail = () => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
@@ -56,6 +68,8 @@ const LoginForm = () => {
         notifyError("Something went wrong!!");
       });
   };
+
+  //log in with github handle
   const signUpWithGithub = () => {
     signInWithPopup(auth, githubProvider)
       .then((result) => {
@@ -66,6 +80,8 @@ const LoginForm = () => {
         notifyError("Something went wrong!!");
       });
   };
+
+  //reset password handle
   const forgotPass = () => {
     sendPasswordResetEmail(auth, email)
       .then(() => {
@@ -77,6 +93,7 @@ const LoginForm = () => {
   };
   return (
     <div>
+      {/* Log in form */}
       <div className="w-full p-8 space-y-3 rounded-xl bg-white shadow-2xl text-gray-800">
         <p className="text-red-500">{error}</p>
 

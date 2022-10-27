@@ -1,5 +1,6 @@
 import React from "react";
 
+//static blog component
 const Blog = () => {
   return (
     <div>

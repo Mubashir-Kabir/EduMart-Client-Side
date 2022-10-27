@@ -6,6 +6,7 @@ const PrivateRoute = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
   const location = useLocation();
 
+  //show loading until the user state comes from authState to prevent going to the log in page
   if (loading) {
     return (
       <div className="flex items-center justify-center space-x-2">
@@ -15,6 +16,8 @@ const PrivateRoute = ({ children }) => {
       </div>
     );
   }
+
+  //after getting the user state , based on user log in or not page redirect to the page user want to visit or to the log in page
   if (user && user.uid) {
     return children;
   } else {

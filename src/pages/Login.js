@@ -7,9 +7,12 @@ const Login = () => {
   return (
     <div>
       <div className="grid grid-cols-1 items-center  lg:grid-cols-2 justify-between align-middle py-10">
+        {/* simple animation for beautify ui */}
         <div className="w-3/4 mx-auto hidden lg:block">
           <Lottie animationData={user} loop={true}></Lottie>
         </div>
+
+        {/* main log in form */}
         <div className="md:mx-20">
           <LoginForm></LoginForm>
         </div>

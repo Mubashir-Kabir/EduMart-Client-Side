@@ -9,6 +9,8 @@ const SideBar = ({ courses }) => {
   const { user, auth } = useContext(AuthContext);
   console.log(user);
   const location = useLocation();
+
+  //user log out handle
   const logOut = (event) => {
     event.preventDefault();
     signOut(auth)
@@ -23,6 +25,7 @@ const SideBar = ({ courses }) => {
   return (
     <div>
       <div className="h-full p-3 space-y-2  lg:w-60 bg-gray-50 text-gray-800">
+        {/* user profile or log in button show based on user log in or not */}
         {user?.uid ? (
           <div className="lg:flex hidden items-center p-2 space-x-4">
             <img
@@ -58,6 +61,7 @@ const SideBar = ({ courses }) => {
           </div>
         )}
 
+        {/* dynamically course name and details course link creating */}
         <div className="divide-y divide-gray-300">
           <ul className="pt-2 pb-4 space-y-2 text-sm">
             {courses.map((course) => (

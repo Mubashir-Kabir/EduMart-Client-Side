@@ -11,6 +11,7 @@ const CourseDetails = () => {
   const course = useLoaderData();
   const ref = React.createRef();
 
+  //destructuring course
   const {
     name,
     price,
@@ -23,6 +24,8 @@ const CourseDetails = () => {
     enrolled,
     details,
   } = course;
+
+  //setting for showing rating star icon dynamically
   let one, two, three, four, five;
   if (ratings >= 1) {
     one = true;

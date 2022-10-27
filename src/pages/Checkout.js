@@ -6,8 +6,14 @@ import { notifyError } from "../utilities/sharedFunctions";
 
 const CheckOut = () => {
   const course = useLoaderData();
+
+  //state for toggle favorite
   const [isFavorite, setIsFavorite] = useState(false);
+
+  //destructuring course
   const { name, thumbnail, offeredBy, enrolled, price } = course;
+
+  //dynamic checkout page creating based on the course user has clicked
   return (
     <div>
       <div className="flex flex-col p-6 mx-4 lg:mx-36 rounded-md my-10 lg:my-16 space-y-4 sm:p-10 bg-gray-100 text-gray-800">

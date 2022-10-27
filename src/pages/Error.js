@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+//a simple error page with go back to home button
 const Error = () => {
   return (
     <div>

@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import logo from "../utilities/pngwing.com.png";
+
+//item function for open and close the accordion
 const Item = ({ title, children }) => {
+  //state for open and close accordion
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="border-b">
+      {/* button for toggle open and close */}
       <button
         type="button"
         aria-label="Open item"
@@ -29,6 +33,8 @@ const Item = ({ title, children }) => {
           />
         </svg>
       </button>
+
+      {/* answer show and hidden based on toggler */}
       {isOpen && (
         <div className="p-4 pt-0">
           <p className="text-gray-700">{children}</p>
@@ -41,6 +47,7 @@ const Item = ({ title, children }) => {
 const FaqAccordion = () => {
   return (
     <div>
+      {/* Accordion component */}
       <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20 ">
         <div className="max-w-xl sm:mx-auto lg:max-w-2xl">
           <div className="max-w-xl mb-10 md:mx-auto sm:text-center lg:max-w-2xl md:mb-12">

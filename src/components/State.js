@@ -1,5 +1,6 @@
 import React from "react";
 
+//static state component (students,courses,teachers,subscribers count)
 const State = () => {
   return (
     <div>

@@ -10,11 +10,15 @@ import logo from "../utilities/logo.png";
 import { notifyError, notifySuccess } from "../utilities/sharedFunctions";
 
 export const Navbar = () => {
+  //state for dark and light theme toggle
   const [isDark, setIsDark] = useState(false);
+
+  //state for hamburger menu in small device
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, auth } = useContext(AuthContext);
   const location = useLocation();
 
+  //user log out handle
   const logOut = (event) => {
     event.preventDefault();
     signOut(auth)
@@ -29,6 +33,7 @@ export const Navbar = () => {
   return (
     <div className="px-4 py-4 mx-auto  bg-gray-100 sm:max-w-xl md:max-w-full  md:px-24 lg:px-8">
       <div className="relative flex items-center justify-between">
+        {/* logo and navlink forpage navigation  */}
         <div className="flex items-center">
           <NavLink to="/" className="inline-flex items-center mr-8">
             <img src={logo} className="w-10" alt="" />
@@ -88,6 +93,7 @@ export const Navbar = () => {
           </ul>
         </div>
         <div className="flex items-center gap-2">
+          {/* conditionally render user profile and login register button based on user log in or not  */}
           <div className="flex items-center gap-8">
             {user?.uid ? (
               <div className=" gap-2  flex">
@@ -159,6 +165,8 @@ export const Navbar = () => {
               </button>
             )}
           </div>
+
+          {/* hamburger menu for small device. hidden for large device */}
           <div className="lg:hidden">
             <button
               aria-label="Open Menu"

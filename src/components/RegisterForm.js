@@ -80,33 +80,43 @@ const RegisterForm = () => {
 
   const signUpWithEmailPass = (event) => {
     event.preventDefault();
-    if (name && email && password) {
-      createUserWithEmailAndPassword(auth, email, password)
-        .then(() => {
-          setErr("");
-          notifySuccess("Successfully Registered");
-          updateProfile(auth.currentUser, {
-            displayName: name,
-            photoURL: url,
-          })
-            .then(() => {
-              // Profile updated!
-              // ...
-            })
-            .catch((error) => {
-              notifyError("profile update failed ");
-            });
-          navigate(from, { replace: true });
-        })
-        .catch((error) => {
-          const errorMessage = error.message;
-          if (errorMessage === "Firebase: Error (auth/email-already-in-use).") {
-            setErr("The Email is already registered");
-            return;
-          }
-          notifyError(errorMessage.slice(22, -2));
-        });
+    if (!name) {
+      setErr("Please provide your full name");
+      return;
     }
+    if (!email) {
+      setErr("Please provide your Email");
+      return;
+    }
+    if (!password) {
+      setErr("Please set a password");
+      return;
+    }
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        setErr("");
+        notifySuccess("Successfully Registered");
+        updateProfile(auth.currentUser, {
+          displayName: name,
+          photoURL: url,
+        })
+          .then(() => {
+            // Profile updated!
+            // ...
+          })
+          .catch((error) => {
+            notifyError("profile update failed ");
+          });
+        navigate(from, { replace: true });
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        if (errorMessage === "Firebase: Error (auth/email-already-in-use).") {
+          setErr("The Email is already registered");
+          return;
+        }
+        notifyError(errorMessage.slice(22, -2));
+      });
   };
   const signUpWithGmail = () => {
     signInWithPopup(auth, googleProvider)

@@ -7,7 +7,10 @@ import FaqAccordion from "../components/FaqAccordion";
 const Faq = () => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 px-10">
+      {/* main faq section */}
       <FaqAccordion></FaqAccordion>
+
+      {/* animation for beautiful ui. hidden for small device */}
       <Lottie
         className="hidden md:block"
         animationData={question}

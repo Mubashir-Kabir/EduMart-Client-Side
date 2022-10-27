@@ -4,8 +4,12 @@ import { HiOutlineMailOpen } from "react-icons/hi";
 import { AiOutlinePhone } from "react-icons/ai";
 import { notifyError } from "../utilities/sharedFunctions";
 
+//simple and dynamic profile page
+
 const Profile = () => {
   const { user } = useContext(AuthContext);
+
+  //destructuring user
   const { photoURL, displayName, email, phoneNumber } = user;
   return (
     <div>
