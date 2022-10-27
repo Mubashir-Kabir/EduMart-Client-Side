@@ -23,23 +23,23 @@ const Footer = () => {
               <Link
                 to="#"
                 title="Email"
-                className="flex items-center justify-center w-10 h-10 rounded-full bg-violet-600 text-gray-50"
+                className="flex items-center justify-center rounded-full  text-gray-800 hover:text-red-800"
               >
-                <MdEmail className="text-2xl"></MdEmail>
+                <MdEmail className="text-3xl"></MdEmail>
               </Link>
               <Link
                 to="#"
                 title="Twitter"
-                className="flex items-center justify-center w-10 h-10 rounded-full bg-violet-600 text-gray-50"
+                className="flex items-center justify-center rounded-full text-gray-800 hover:text-red-800"
               >
-                <IoLogoTwitter className="text-2xl"></IoLogoTwitter>
+                <IoLogoTwitter className="text-3xl"></IoLogoTwitter>
               </Link>
               <Link
                 to="#"
                 title="GitHub"
-                className="flex items-center justify-center w-10 h-10 rounded-full bg-violet-600 text-gray-50"
+                className="flex items-center justify-center w-10 h-10 rounded-full text-gray-800 hover:text-red-800"
               >
-                <BsGithub className="text-2xl"></BsGithub>
+                <BsGithub className="text-3xl"></BsGithub>
               </Link>
             </div>
           </div>

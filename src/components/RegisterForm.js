@@ -42,13 +42,14 @@ const RegisterForm = () => {
       return;
     }
     if (
-      !/^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/.test(
+      !/^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$/.test(
         e.target.value
       )
     ) {
       setErr("URL must be starts with HTTP or HTTPS");
       return;
     }
+    setErr("");
     setUrl(e.target.value);
   };
   const mailValidation = (e) => {
@@ -80,9 +81,9 @@ const RegisterForm = () => {
   const signUpWithEmailPass = (event) => {
     event.preventDefault();
     if (name && email && password) {
-      setErr("");
       createUserWithEmailAndPassword(auth, email, password)
         .then(() => {
+          setErr("");
           notifySuccess("Successfully Registered");
           updateProfile(auth.currentUser, {
             displayName: name,
@@ -105,8 +106,6 @@ const RegisterForm = () => {
           }
           notifyError(errorMessage.slice(22, -2));
         });
-    } else {
-      setErr("Please fill the information bellow");
     }
   };
   const signUpWithGmail = () => {
@@ -149,7 +148,7 @@ const RegisterForm = () => {
           <div className="space-y-1 text-sm">
             <input
               required
-              onBlur={nameValidation}
+              onChange={nameValidation}
               type="text"
               name="name"
               id="name"
@@ -159,7 +158,7 @@ const RegisterForm = () => {
           </div>
           <div className="space-y-1 text-sm">
             <input
-              onBlur={urlValidation}
+              onChange={urlValidation}
               type="url"
               name="photoURL"
               id="photoURL"
@@ -170,7 +169,7 @@ const RegisterForm = () => {
           <div className="space-y-1 text-sm">
             <input
               required
-              onBlur={mailValidation}
+              onChange={mailValidation}
               type="email"
               name="email"
               id="email"

@@ -6,7 +6,7 @@ EduMart is a web-based Audience Engagement Cloud Platform for education.The webs
 
 ## Live Site:
 
-You can visit this site at:
+You can visit this site at: https://edumart-113ce.firebaseapp.com/
 
 ## Features:
 

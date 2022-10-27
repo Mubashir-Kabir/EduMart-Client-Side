@@ -111,7 +111,7 @@ const CourseDetails = () => {
                 </Link>
               </div>
               <div className="text-left flex flex-col lg:flex-row gap-3 items-center justify-around ">
-                <div>
+                <div className="text-center">
                   <h2 className="text-2xl font-semibold">student reviews</h2>
                   <div className="flex flex-wrap items-center mt-2 mb-1 space-x-2">
                     <div className="flex">
@@ -154,14 +154,14 @@ const CourseDetails = () => {
                     </span>{" "}
                   </p>
                 </div>
-                <div>
+                {/* <div>
                   <Link
                     to={`../checkout/${id}`}
                     className="inline-flex items-center  justify-center py-4 px-7 font-semibold text-xl tracking-wide text-white transition duration-200 rounded shadow-xl bg-red-500 hover:bg-red-700 focus:shadow-outline focus:outline-none"
                   >
                     Enroll now
                   </Link>
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="px-6 text-left space-y-12">
@@ -200,7 +200,7 @@ const CourseDetails = () => {
               to={`../checkout/${id}`}
               className="inline-flex items-center  justify-center py-4 px-7 font-semibold text-xl tracking-wide text-white transition duration-200 rounded shadow-xl bg-red-500 hover:bg-red-700 focus:shadow-outline focus:outline-none"
             >
-              Enroll now
+              Get premium access
             </Link>
           </div>
         </div>
