@@ -49,33 +49,36 @@ const FaqAccordion = () => {
                 <img
                   src={logo}
                   alt=""
-                  className="absolute -top-5 left-0 z-0 hidden w-32 -mt-12 -ml-28 text-blue-gray-100 lg:w-32 lg:-ml-12 lg:-mt-6 sm:block"
+                  className="absolute -top-10 -left-5 z-0 hidden w-32 -mt-12 -ml-28 text-blue-gray-100 lg:w-32 lg:-ml-12 lg:-mt-6 sm:block"
                 ></img>
-                <span className="relative">Some</span>
+                <span className="relative">Frequently </span>
               </span>{" "}
-              quick, brown fox jumps over a lazy dog
+              Asked Question
             </h2>
             <p className="text-base text-gray-700 md:text-lg ">
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-              accusantium doloremque rem aperiam, eaque ipsa quae.
+              Some frequently asked question and answers are given bellow. Hope
+              that will help
             </p>
           </div>
           <div className="space-y-4 text-left">
-            <Item title="The quick, brown fox jumps over a lazy dog?">
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-              accusantium doloremque rem aperiam, eaque ipsa quae.
+            <Item title="What is EduMart?">
+              EduMart is a web-based Audience Engagement Cloud Platform for
+              education.The website is mainly focusing on English Language.
+              There are interactive courses at virtual events. No app install is
+              required.
             </Item>
-            <Item title="The first mate and his Skipper too will do?">
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-              accusantium doloremque rem aperiam, eaque ipsa quae.
+            <Item title="What courses EduMArt offer?">
+              EduMart offers mainly English language based courses. that can
+              help anyone to improve in English language
             </Item>
-            <Item title="Is the Space Pope reptilian!?">
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-              accusantium doloremque rem aperiam, eaque ipsa quae.
+            <Item title="How to Enroll a course?">
+              Click the courses section from the navigation. choose your course.
+              Click on course details. Click Enroll now from the details page.
+              make payment and the course content will be available for you.
             </Item>
-            <Item title="How much money you got on you?">
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-              accusantium doloremque rem aperiam, eaque ipsa quae.
+            <Item title="How to get get updates?">
+              Subscribe EduMart for getting updated. And also about new courses
+              and other news.
             </Item>
           </div>
         </div>
