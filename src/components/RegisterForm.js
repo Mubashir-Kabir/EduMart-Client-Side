@@ -14,17 +14,25 @@ import { notifyError, notifySuccess } from "../utilities/sharedFunctions";
 
 const RegisterForm = () => {
   const { auth } = useContext(AuthContext);
+
+  //auth providers
   const googleProvider = new GoogleAuthProvider();
   const githubProvider = new GithubAuthProvider();
-  const navigate = useNavigate();
-  const location = useLocation();
 
+  const navigate = useNavigate();
+
+  //getting location for redirect user where came from
+  const location = useLocation();
   const from = location.state?.from?.pathname || "/";
-  const [email, setEmail] = useState("");
-  const [url, setUrl] = useState("");
-  const [err, setErr] = useState("");
-  const [password, setPassword] = useState("");
+
+  //states for user name,photo url, email,password and error
   const [name, setName] = useState("");
+  const [url, setUrl] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [err, setErr] = useState("");
+
+  //validate name. name cant't be empty
   const nameValidation = (e) => {
     if (e.target.value === "") {
       setErr("Please tell us your name");
@@ -37,6 +45,8 @@ const RegisterForm = () => {
     setErr("");
     setName(e.target.value);
   };
+
+  //photo url validation
   const urlValidation = (e) => {
     if (e.target.value === "") {
       return;
@@ -52,6 +62,8 @@ const RegisterForm = () => {
     setErr("");
     setUrl(e.target.value);
   };
+
+  //email validation
   const mailValidation = (e) => {
     const mail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.target.value);
     if (mail) {
@@ -61,6 +73,8 @@ const RegisterForm = () => {
       setErr("Invalid Email Address!!");
     }
   };
+
+  //password validation (at least 6 characters, one digit and one special character )
   const passValidation = (e) => {
     if (!/.{6,}/.test(e.target.value)) {
       setErr("password should be at least 6 charecter!!");
@@ -78,6 +92,7 @@ const RegisterForm = () => {
     setPassword(e.target.value);
   };
 
+  //email and password based sign up handle
   const signUpWithEmailPass = (event) => {
     event.preventDefault();
     if (!name) {
@@ -101,13 +116,13 @@ const RegisterForm = () => {
           photoURL: url,
         })
           .then(() => {
-            // Profile updated!
-            // ...
+            navigate(from, { replace: true });
           })
           .catch((error) => {
             notifyError("profile update failed ");
+            navigate(from, { replace: true });
           });
-        navigate(from, { replace: true });
+        // navigate(from, { replace: true });
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -118,6 +133,8 @@ const RegisterForm = () => {
         notifyError(errorMessage.slice(22, -2));
       });
   };
+
+  //gmail sign up handle
   const signUpWithGmail = () => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
@@ -130,6 +147,8 @@ const RegisterForm = () => {
         notifyError("Something went wrong");
       });
   };
+
+  //github sign up handle
   const signUpWithGithub = () => {
     signInWithPopup(auth, githubProvider)
       .then(() => {
@@ -150,6 +169,8 @@ const RegisterForm = () => {
         <h1 className="text-red-500">{err}</h1>
 
         <h1 className="text-2xl font-bold text-center">Register</h1>
+
+        {/* form for email and password based sign up */}
         <form
           noValidate=""
           action=""
@@ -205,6 +226,7 @@ const RegisterForm = () => {
             Register
           </button>
         </form>
+
         <div className="flex items-center pt-4 space-x-1">
           <div className="flex-1 h-px sm:w-16 bg-gray-300"></div>
           <p className="px-3 text-sm text-gray-600">
@@ -212,6 +234,8 @@ const RegisterForm = () => {
           </p>
           <div className="flex-1 h-px sm:w-16 bg-gray-300"></div>
         </div>
+
+        {/* social media log in icons */}
         <div className="flex justify-center space-x-4">
           <button
             onClick={signUpWithGmail}
@@ -229,6 +253,7 @@ const RegisterForm = () => {
             <FaGithub></FaGithub>
           </button>
         </div>
+
         <p className="text-xs text-center sm:px-6 text-gray-600">
           Already have an account?
           <Link
